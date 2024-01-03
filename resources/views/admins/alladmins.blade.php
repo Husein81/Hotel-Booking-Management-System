@@ -7,11 +7,13 @@
         <div class="col">
           <div class="card">
             <div class="card-body">
+            <div class="container">
             @if(session()->has('error_dates'))
                <div class="alert alert-success">
             {{ session()->get('error_dates') }}
                </div>
             @endif
+            </div>
             </div>
               <h5 class="card-title mb-4 d-inline">Admins</h5>
              <a  href="{{ route('admins.create')}}" class="btn btn-primary mb-4 text-center float-right">Create Admins</a>

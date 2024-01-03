@@ -15,10 +15,15 @@
       </div>
 </div>
     <div class="container">
-                    <!-- Replace "test" with your own sandbox Business account app client ID -->
+          <form action="{{route('chekout)}}">
+            @csrf
+            <button>checkout</button>
+          </form>
+
+
+                    <!-- Replace "test" with your own sandbox Business account app client ID
                     <script src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
-                    <!-- Set up a container element for the button -->
-                    <button id="paypal-button-container"></button>
+                    <button id="paypal-button-container">Pay Pal</button>
                     <script>
                         paypal.Buttons({
                         // Sets up the transaction when a payment button is clicked
@@ -39,7 +44,7 @@
                             });
                         }
                         }).render('#paypal-button-container');
-                    </script>
+                    </script> -->
 
     </div>
 @endsection
