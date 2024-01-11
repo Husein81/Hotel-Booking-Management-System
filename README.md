@@ -1,4 +1,4 @@
-<h1>Laravel Hotel Booking Management System</h1>
+<h1>Laravel PHP + Vite:<br> Hotel Booking Management System</h1>
 
 <p>Welcome to our Laravel-based Hotel Booking Management System! This system is designed to streamline hotel operations, providing a seamless and secure experience for both guests and hotel staff.</p>
 
