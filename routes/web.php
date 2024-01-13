@@ -36,7 +36,7 @@ Route::get('/rooms-details/{id}', [App\Http\Controllers\Hotels\HotelsController:
 Route::post('/rooms-booking/{id}', [App\Http\Controllers\Hotels\HotelsController::class, 'roomBooking'])->name('hotel.rooms.booking');
 
 // pay
-Route::get('/pay', [App\Http\Controllers\Hotels\HotelsController::class, 'PayWithPaypal'])->name('hotel.pay')->middleware('check.for.price');
+Route::get('/payment', [App\Http\Controllers\Hotels\HotelsController::class, 'paymentForm'])->name('hotel.payment')->middleware('check.for.price');
 Route::post('/checkout', [App\Http\Controllers\Hotels\HotelsController::class, 'checkout'])->name('hotel.checkout')->middleware('check.for.price');
 Route::get('/success', [App\Http\Controllers\Hotels\HotelsController::class, 'Success'])->name('hotel.success')->middleware('check.for.price');
 });

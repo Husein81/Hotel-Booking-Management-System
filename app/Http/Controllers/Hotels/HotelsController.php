@@ -12,18 +12,20 @@ use DateTime;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-
+use Laravel\Ui\Presets\React;
+use Stripe\Stripe;
+use Stripe\Exception\InvalidRequestException;
 class HotelsController extends Controller
 {
     public function rooms( $id ) {
-        $getRooms = Apartment::select()->orderBy('id','desc')->take(6)->where('id',$id)->get();
+        $getRooms = Apartment::select()->orderBy('id','desc')->take(6)->where('hotel_id',$id)->get();
 
 
         return view('hotels.rooms',compact('getRooms'));
     }
     public function roomDetails( $id ) {
         $getRoom = Apartment::find($id);
-
+        $gethotel = Hotel::find($id);
 
         return view('hotels.roomdetails',compact('getRoom'));
     }
@@ -53,13 +55,12 @@ class HotelsController extends Controller
                     "price" => $days * $room->price,
                     "user_id" => Auth::user()->id,
                     "room_name" => $room->name,
-                    "hotel_name" => $hotel->name
+                    // "hotel_name" => $hotel->name
                 ]);
                 $total_price = $days*$room->price;
                 $price = Session::put('price',$total_price);
-                $getPrice = Session::get($price);
 
-                return Redirect::route('hotel.pay');
+                return Redirect::route('hotel.payment');
             } else {
               return Redirect::route('hotel.rooms.details',$room->id)->with(['error'=>'check out date should be greater than check in date']);
             }
@@ -68,9 +69,32 @@ class HotelsController extends Controller
         }
     }
 
-    public function PayWithPaypal(){
 
-        return view('hotels.pay');
+
+    public function paymentForm(){
+
+        return view('hotels.payment');
+    }
+
+
+    public function checkout(Request $request){
+        Stripe::setApiKey(env('STRIPE_SK'));
+
+        $token = $request->stripeToken;
+
+        if (!$token) {
+            throw new InvalidRequestException("Invalid payment source.", 400);
+        }
+        \Stripe\Charge::create([
+            'amount' => Session::get('price'),
+            'currency'=>'usd',
+            'source' => $token
+
+        ]);
+
+        Session::flash('success','Payment has been successfully');
+        return redirect()->route('hotel.success');
+
     }
 
     public function success(){

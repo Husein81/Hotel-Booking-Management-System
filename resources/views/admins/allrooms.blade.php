@@ -52,7 +52,7 @@
                     <td>{{$room->num_beds}}</td>
                     <td>{{$room->hotel_id}}</td>
 
-                    <td><a href="{{route('rooms.delete',$room->id')}}" class="btn btn-danger  text-center ">Delete</a></td>
+                    <td><a href="{{route('rooms.delete',$room->id)}}" class="btn btn-danger  text-center ">Delete</a></td>
                   </tr>
                 @endforeach
                 </tbody>
